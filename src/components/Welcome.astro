@@ -1,0 +1,167 @@
+---
+import { Image } from "astro:assets";
+import landscape from "../assets/landscape.jpg";
+import { getLangFromUrl, getLocalizedPath } from "../utils/i18n";
+import Button from "./Button.astro";
+
+const lang = getLangFromUrl(Astro.url);
+
+interface Props {
+  title?: string;
+}
+---
+
+<div class="min-h-screen">
+  <!-- Hero Section with Contact Info -->
+  <div class="relative h-screen">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+      <Image
+        src={landscape}
+        alt="Auberge de Mauroul"
+        class="w-full h-full object-cover"
+      />
+    </div>
+
+    <!-- Contact Info Overlay -->
+    <div
+      class="absolute top-4 right-4 flex flex-col gap-4 bg-white/80 p-4 rounded-lg"
+    >
+      <div class="flex items-center gap-2">
+        <img
+          src="https://local-fr-public.s3.eu-west-3.amazonaws.com/prod/webtool/userfiles/30839/picto%20telephone.png"
+          alt="Téléphone"
+          class="w-4 h-4"
+        />
+        <a href="tel:0467972773" class="hover:text-gray-600">04 67 97 27 73</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <img
+          src="https://local-fr-public.s3.eu-west-3.amazonaws.com/prod/webtool/userfiles/30839/picto%20mobile.png"
+          alt="Mobile"
+          class="w-3 h-4"
+        />
+        <a href="tel:0630106915" class="hover:text-gray-600">06 30 10 69 15</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <img
+          src="https://local-fr-public.s3.eu-west-3.amazonaws.com/prod/webtool/userfiles/30839/picto%20adress.png"
+          alt="Adresse"
+          class="w-4 h-4"
+        />
+        <div>
+          <p>Hameau de Mauroul, 34390</p>
+          <p>Saint - Julien</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Presentation Section -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl fontcormorant text-center mb-8">Notre histoire</h2>
+      <div class="max-w-2xl mx-auto space-y-4 text-lg">
+        <p>
+          Notre histoire a débuté avec la découverte de cette auberge, existante
+          depuis 1963.
+        </p>
+        <p>
+          Idéalement située dans ce petit hameau de Mauroul elle a acquis une
+          notoriété au fil des années.
+        </p>
+        <p>
+          Nichée au pied du massif du Caroux dans un écrin de verdure, le temps
+          semble s'être arrêté à Mauroul.
+        </p>
+        <p>
+          A tous les amoureux de Nature, de calme et de sérénité, notre
+          restaurant est un espace pour ceux qui ne sont pas pressés, pour les
+          épicuriens et les gens heureux.
+        </p>
+        <p>
+          Si vous venez chez nous c'est que vous avez déjà choisi de passer un
+          moment de votre vie avec nous.
+        </p>
+        <p>
+          Nous saurons satisfaire vos exigences en proposant une cuisine
+          traditionnelle parsemée d'une touche d'exotisme aux saveurs du monde.
+        </p>
+        <p>
+          L'hiver vous pourrez profiter de notre magnifique cheminée et aux
+          beaux jours de notre ravissante terrasse panoramique.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Découverte Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6">
+          Découvrez notre auberge à Mauroul dans l'Hérault
+        </div>
+        <div class="space-y-4">
+          <p>
+            Si vous êtes en visite dans notre région, arrêtez-vous à l'auberge
+            pour vous offrir une pause gourmande dans notre restaurant.
+          </p>
+          <p>
+            Le chef Luc vous fera découvrir une cuisine traditionnelle
+            française, parsemée d'une touche d'exotisme aux saveurs du monde.
+          </p>
+          <p>
+            Marie saura rendre votre moment agréable et chaleureux, dans un
+            cadre où règnent la nature et le chant des oiseaux.
+          </p>
+          <p>
+            L'auberge étant située au pied du massif de l'Espinouse vous
+            bénéficierez d'une vue imprenable sur les collines.
+          </p>
+          <p>
+            L'hiver, vous pourrez profiter de notre magnifique cheminée et aux
+            beaux jours, de notre ravissante terrasse panoramique.
+          </p>
+        </div>
+      </div>
+      <div>
+        <img
+          src="https://local-fr-public.s3.eu-west-3.amazonaws.com/prod/webtool/userfiles/30839/MODIF%2016092021/Auberge_de_Mauroul%209-1.jpg"
+          alt="Auberge de Mauroul"
+          class="w-full rounded-lg shadow-lg"
+        />
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Réservation Section -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl font-cormorant mb-6">Pensez à réserver !</h2>
+    <div class="max-w-2xl mx-auto space-y-4">
+      <p>
+        Contactez-nous par téléphone au 04 67 97 27 73 pour réserver une table
+        dans notre établissement.
+      </p>
+      <p>Nous sommes ouverts tous les jours sauf mercredi et jeudi</p>
+      <p>
+        Nous pouvons accueillir des groupes exceptionnellement le dimanche soir
+        sur réservation.
+      </p>
+      <Button
+        href={getLocalizedPath("/reserver", lang)}
+        isLink
+      >
+        Réserver une table
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .font-cormorant {
+    font-family: "Cormorant Garamond", serif;
+  }
+</style>

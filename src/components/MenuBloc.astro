@@ -1,0 +1,106 @@
+---
+import { t } from "../utils/i18n";
+import { getLangFromUrl } from "../utils/i18n";
+
+interface MenuItem {
+  title: string;
+  price: string;
+  description: string;
+}
+
+type Category = "starters" | "mainCourses" | "desserts";
+
+interface Props {
+  category: Category;
+  items: MenuItem[];
+}
+
+const { category, items } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+
+// Séparer les items en deux colonnes égales
+const midPoint = Math.ceil(items.length / 2);
+const leftItems = items.slice(0, midPoint);
+const rightItems = items.slice(midPoint);
+---
+
+<section class="py-10 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-10">
+      <span class="text-[#9B8579] tracking-widest text-sm uppercase">
+        {t(lang, `menu.categories.${category}.subtitle`)}
+      </span>
+      <div class="flex justify-center items-center gap-4 my-8">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="41"
+          height="9"
+          class="rotate-180"
+        >
+          <path
+            fill="none"
+            stroke="#9B8579"
+            stroke-miterlimit="10"
+            d="M40.881 8.576L20.562.591.244 8.576"></path>
+          <path
+            fill="none"
+            stroke="#9B8579"
+            stroke-miterlimit="10"
+            d="M40.881.591L20.562 8.576.243.591"></path>
+        </svg>
+        <h2 class="text-3xl font-cormorant">
+          {t(lang, `menu.categories.${category}.title`)}
+        </h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="41" height="9">
+          <path
+            fill="none"
+            stroke="#9B8579"
+            stroke-miterlimit="10"
+            d="M40.881 8.576L20.562.591.244 8.576"></path>
+          <path
+            fill="none"
+            stroke="#9B8579"
+            stroke-miterlimit="10"
+            d="M40.881.591L20.562 8.576.243.591"></path>
+        </svg>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+      <div class="space-y-8 px-4">
+        {
+          leftItems.map((item) => (
+            <div>
+              <div class="flex justify-between items-baseline gap-4">
+                <h6 class="text-xl font-cormorant">{item.title}</h6>
+                <div class="flex-1 border-b border-dotted border-gray-300 mx-4" />
+                <span class="text-[#9B8579]">{item.price}€</span>
+              </div>
+              <p class="text-gray-600 mt-2 text-sm">{item.description}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="space-y-8 px-4">
+        {
+          rightItems.map((item) => (
+            <div>
+              <div class="flex justify-between items-baseline gap-4">
+                <h6 class="text-xl font-cormorant">{item.title}</h6>
+                <div class="flex-1 border-b border-dotted border-gray-300 mx-4" />
+                <span class="text-[#9B8579]">{item.price}€</span>
+              </div>
+              <p class="text-gray-600 mt-2 text-sm">{item.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .font-cormorant {
+    font-family: "Cormorant Garamond", serif;
+  }
+</style>

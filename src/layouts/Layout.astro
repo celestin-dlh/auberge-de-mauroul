@@ -1,0 +1,171 @@
+---
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+import { getLangFromUrl, t, getLocalizedPath } from "../utils/i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const currentPath = Astro.url.pathname.replace(/^\/(en|fr)/, "");
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{t(lang, "home.title")}</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen font-['Cormorant_Garamond'] relative">
+    <header
+      id="main-header"
+      class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 transition-all duration-300 ease-in-out"
+    >
+      <div class="pl-4 py-4 md:pl-10 flex justify-between items-center">
+        <a
+          href={getLocalizedPath("/", lang)}
+          class="text-2xl font-cormorant italic transition-all duration-300 ease-in-out"
+          >{t(lang, "home.title")}</a
+        >
+
+        <!-- Hamburger button -->
+        <button
+          id="hamburger"
+          class="md:hidden relative z-50 ml-auto"
+          aria-label="Menu"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex space-x-6 ml-auto">
+          <a
+            href={getLocalizedPath("/", lang)}
+            class="hover:text-gray-600 transition-all duration-300 ease-in-out"
+            >{t(lang, "nav.restaurant")}</a
+          >
+          <a
+            href={getLocalizedPath("/menu", lang)}
+            class="hover:text-gray-600 transition-all duration-300 ease-in-out"
+            >{t(lang, "nav.menu")}</a
+          >
+          <a
+            href={getLocalizedPath("/reserver", lang)}
+            class="hover:text-gray-600 transition-all duration-300 ease-in-out"
+            >{t(lang, "nav.book")}</a
+          >
+        </nav>
+
+        <div class="flex items-center space-x-2 md:ml-10 ml-4 pr-4">
+          <a
+            href={getLocalizedPath(currentPath, "fr")}
+            class="hover:text-gray-600 text-sm">FR</a
+          >
+          <span>|</span>
+          <a
+            href={getLocalizedPath(currentPath, "en")}
+            class="hover:text-gray-600 text-sm">EN</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div id="main-content" class="relative z-30">
+      <main class="pt-16">
+        <slot />
+      </main>
+
+      <Footer />
+    </div>
+
+    <div
+      id="overlay"
+      class="fixed inset-0 pointer-events-none bg-black/50 z-[9998] opacity-0 transition-opacity duration-300 ease-in-out"
+    >
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div
+      id="mobile-nav"
+      class="fixed top-0 left-10 right-0 h-screen bg-white shadow-2xl transform transition-transform duration-300 ease-in-out translate-x-full md:hidden z-[9999]"
+    >
+      <div class="flex flex-col items-center h-full justify-center">
+        <nav
+          class="flex flex-col items-center space-y-4 text-lg uppercase tracking-widest"
+        >
+          <a href="/restaurant" class="hover:text-gray-600"
+            >{t(lang, "nav.restaurant")}</a
+          >
+          <div class="w-1 h-1 bg-black rounded-full"></div>
+          <a href="/menu" class="hover:text-gray-600">{t(lang, "nav.menu")}</a>
+          <div class="w-1 h-1 bg-black rounded-full"></div>
+          <a href="/reserver" class="hover:text-gray-600"
+            >{t(lang, "nav.book")}</a
+          >
+        </nav>
+      </div>
+    </div>
+
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const mobileNav = document.getElementById("mobile-nav");
+      const mainContent = document.getElementById("main-content");
+      const overlay = document.getElementById("overlay");
+
+      function toggleMenu(isOpen: boolean) {
+        if (isOpen) {
+          mobileNav?.classList.remove("translate-x-full");
+          overlay?.classList.remove("opacity-0");
+          overlay?.classList.add("opacity-100");
+        } else {
+          mobileNav?.classList.add("translate-x-full");
+          overlay?.classList.remove("opacity-100");
+          overlay?.classList.add("opacity-0");
+        }
+      }
+
+      if (hamburger && mobileNav && mainContent && overlay) {
+        hamburger.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const isMenuClosed = mobileNav.classList.contains("translate-x-full");
+          toggleMenu(isMenuClosed);
+        });
+
+        mainContent.addEventListener("click", () => {
+          if (!mobileNav.classList.contains("translate-x-full")) {
+            toggleMenu(false);
+          }
+        });
+
+        overlay.addEventListener("click", () => {
+          toggleMenu(false);
+        });
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>

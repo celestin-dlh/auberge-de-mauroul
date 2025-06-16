@@ -1,0 +1,62 @@
+---
+import MenuBloc from "../components/MenuBloc.astro";
+import Layout from "../layouts/Layout.astro";
+import { t } from "../utils/i18n";
+import { getLangFromUrl } from "../utils/i18n";
+
+const lang = getLangFromUrl(Astro.url);
+
+// // Get database instance
+// const db = getDb(Astro.locals.runtime.env);
+
+// // Fetch menu data from D1 using raw SQL
+// const sectionsResult = await db.prepare(`
+//   SELECT * FROM menu_sections 
+//   WHERE is_active = 1 
+//   ORDER BY "order" ASC
+// `).all();
+
+// const itemsResult = await db.prepare(`
+//   SELECT * FROM menu_items 
+//   WHERE is_available = 1 
+//   ORDER BY "order" ASC
+// `).all();
+
+// console.log(sectionsResult);
+
+// const sections = sectionsResult.results;
+// const allItems = itemsResult.results;
+
+// // Group items by section
+// const menuData = sections.map(section => {
+//   const sectionItems = allItems
+//     .filter(item => item.section_id === section.id)
+//     .map(item => ({
+//       title: lang === 'fr' ? item.title_fr : item.title_en,
+//       price: item.price.toString(),
+//       description: lang === 'fr' ? item.description_fr : item.description_en,
+//     }));
+
+//   return {
+//     key: section.key,
+//     items: sectionItems,
+//   };
+// });
+
+// // Extract items by section key for MenuBloc components
+// const entrees = menuData.find(section => section.key === 'starters')?.items || [];
+// const plats = menuData.find(section => section.key === 'mainCourses')?.items || [];
+// const desserts = menuData.find(section => section.key === 'desserts')?.items || [];
+---
+
+<Layout>
+  <h1 class="text-center text-5xl mt-10 font-cormorant">
+    {t(lang, "menu.title")}
+  </h1>
+  <!-- <MenuBloc category="starters" items={entrees} />
+  <MenuBloc category="mainCourses" items={plats} />
+  <MenuBloc category="desserts" items={desserts} /> -->
+  <p class="text-center mt-4 text-sm pb-12">
+    {t(lang, "menu.footer")}
+  </p>
+</Layout>

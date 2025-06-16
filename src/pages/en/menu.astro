@@ -1,0 +1,98 @@
+---
+import MenuBloc from "../../components/MenuBloc.astro";
+import Layout from "../../layouts/Layout.astro";
+import { t } from "../../utils/i18n";
+import { getLangFromUrl } from "../../utils/i18n";
+
+const lang = getLangFromUrl(Astro.url);
+
+const entrees = [
+  {
+    title: "Entrée seule",
+    price: "16",
+    description:
+      "L'asperge de pays: en bavaroise, pointes croquantes au lard fumé, blinis à l'ail noir et émulsion béarnaise",
+  },
+  {
+    title: "Morilles farcies",
+    price: "16",
+    description:
+      "Morilles farcies à la volaille et au vin jaune, mousseline d'artichaud et biscuit sablé aux herbes de garrigue et parmesan",
+  },
+  {
+    title: "Foie gras du Sud Ouest",
+    price: "21",
+    description:
+      "Foie gras du Sud Ouest farci au magret de canard fumé (sup + 5€)",
+  },
+];
+
+const plats = [
+  {
+    title: "Mosaique de cabillaud",
+    price: "24",
+    description:
+      "Mosaique de cabillaud à l'ail des ours, sauce beurre blanc au crémant d'alsace (Servi avec aligot et accompagnements)",
+  },
+  {
+    title: "Assiette végétarienne",
+    price: "24",
+    description:
+      "L'assiette végétarienne de l'Auberge (Servi avec aligot et accompagnements)",
+  },
+  {
+    title: "Magret de canard",
+    price: "24",
+    description:
+      "Magret de canard, sauce aux cépes (Servi avec aligot et accompagnements)",
+  },
+  {
+    title: "Déclinaison d'agneau",
+    price: "24",
+    description:
+      "La selle farcie aux morilles, cromesqui de gigot d'agneau en croûte d'oignons frits et ail des ours (Servi avec aligot et accompagnements)",
+  },
+  {
+    title: "Filet de bœuf charolais",
+    price: "30",
+    description:
+      "Le filet de bœuf charolais, jus de boeuf réduit au vin rouge (sup + 6€) (Servi avec aligot et accompagnements)",
+  },
+];
+
+const desserts = [
+  {
+    title: "La coupe de l'auberge",
+    price: "10",
+    description:
+      "Glaces artisanales vanille, caramel beurre salé et marrons, crème de marrons, chantilly et sa tuile à la crème de marrons",
+  },
+  {
+    title: "Coque fine de meringue",
+    price: "10",
+    description: "Mousse et tartare de fraise et gelée citron mélisse",
+  },
+  {
+    title: "Cheesecake revisité",
+    price: "10",
+    description:
+      "Le cheesecake revisité à la fève de tonka, pain perdu fleur d'oranger et cannelle",
+  },
+  {
+    title: "Parfait glacé exotique",
+    price: "10",
+    description:
+      "Le parfait glacé exotique, noix de coco et rhum, tuile croustillante et coulis exotique",
+  },
+];
+---
+
+<Layout>
+  <h1 class="text-center text-5xl mt-10 font-cormorant">Notre menu</h1>
+  <MenuBloc category="starters" items={entrees} />
+  <MenuBloc category="mainCourses" items={plats} />
+  <MenuBloc category="desserts" items={desserts} />
+  <p class="text-center mt-4 text-sm pb-12">
+    {t(lang, "menu.footer")}
+  </p>
+</Layout>
