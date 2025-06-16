@@ -1,7 +1,6 @@
 ---
 import { t } from "../utils/i18n";
 import { getLangFromUrl } from "../utils/i18n";
-import disabledIcon from "../assets/disabled.svg";
 const lang = getLangFromUrl(Astro.url);
 ---
 
@@ -87,7 +86,7 @@ const lang = getLangFromUrl(Astro.url);
         </div>
         <div class="flex items-center justify-center gap-2 text-gray-700">
           <img 
-            src={disabledIcon.src} 
+            src="/disabled.svg" 
             alt="Wheelchair access icon" 
             class="w-6 h-6"
           />
